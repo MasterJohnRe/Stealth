@@ -1,0 +1,5 @@
+Debug/
+x64/
+Stealth/Debug/
+Stealth/x64/
+.vs/

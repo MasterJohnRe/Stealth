@@ -9,10 +9,6 @@
       <UniqueIdentifier>{93995380-89BD-4b04-88EB-625FBE52EBFB}</UniqueIdentifier>
       <Extensions>h;hh;hpp;hxx;h++;hm;inl;inc;ipp;xsd</Extensions>
     </Filter>
-    <Filter Include="Resource Files">
-      <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
-      <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
-    </Filter>
     <Filter Include="external">
       <UniqueIdentifier>{bdfbcc56-7c58-476f-b5b9-0fcc2b16b6c8}</UniqueIdentifier>
     </Filter>
@@ -22,43 +18,41 @@
     <Filter Include="external\imgui\backends">
       <UniqueIdentifier>{c4287a47-a544-469c-ba0c-7b3cfa190d89}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Resource Files">
+      <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
+      <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="ImGuiService.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\..\..\Downloads\imgui-1.91.2\imgui.cpp">
-      <Filter>external\imgui</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\..\..\Downloads\imgui-1.91.2\imgui_demo.cpp">
-      <Filter>external\imgui</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\..\..\Downloads\imgui-1.91.2\imgui_draw.cpp">
-      <Filter>external\imgui</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\..\..\Downloads\imgui-1.91.2\imgui_tables.cpp">
-      <Filter>external\imgui</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\..\..\Downloads\imgui-1.91.2\imgui_widgets.cpp">
-      <Filter>external\imgui</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\..\..\Downloads\imgui-1.91.2\backends\imgui_impl_opengl3.cpp">
-      <Filter>external\imgui\backends</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\..\..\Downloads\imgui-1.91.2\backends\imgui_impl_glfw.cpp">
-      <Filter>external\imgui\backends</Filter>
-    </ClCompile>
     <ClCompile Include="HelperFunctions.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="main.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="external\imgui-1.91.2\backends\imgui_impl_glfw.cpp">
+      <Filter>external\imgui\backends</Filter>
+    </ClCompile>
+    <ClCompile Include="external\imgui-1.91.2\backends\imgui_impl_opengl3.cpp">
+      <Filter>external\imgui\backends</Filter>
+    </ClCompile>
+    <ClCompile Include="external\imgui-1.91.2\imgui.cpp">
+      <Filter>external\imgui</Filter>
+    </ClCompile>
+    <ClCompile Include="external\imgui-1.91.2\imgui_demo.cpp">
+      <Filter>external\imgui</Filter>
+    </ClCompile>
+    <ClCompile Include="external\imgui-1.91.2\imgui_draw.cpp">
+      <Filter>external\imgui</Filter>
+    </ClCompile>
+    <ClCompile Include="external\imgui-1.91.2\imgui_tables.cpp">
+      <Filter>external\imgui</Filter>
+    </ClCompile>
+    <ClCompile Include="external\imgui-1.91.2\imgui_widgets.cpp">
+      <Filter>external\imgui</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="ImGuiService.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="HelperFunctions.h">
       <Filter>Header Files</Filter>
     </ClInclude>

@@ -88,13 +88,13 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>WIN32;_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>C:\Users\Amit\Downloads\imgui-1.91.2; C:\Users\Amit\Downloads\glfw-3.4.bin.WIN64\include;C:\Users\Amit\Downloads\imgui-1.91.2\backends;C:\Users\Amit\Downloads\glew-2.1.0\include;</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>.\external\imgui-1.91.2;.\external\glfw-3.4.bin.WIN64\include;.\external\imgui-1.91.2\backends;.\external\glew-2.1.0\include</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalLibraryDirectories>C:\Users\Amit\Downloads\glfw-3.4.bin.WIN64\lib-vc2019;"C:\Program Files (x86)\Windows Kits\10\Lib\10.0.22621.0\um\x64\OpenGL32.Lib";C:\Users\Amit\Downloads\glew-2.1.0\lib\Release\x64;C:\Users\Amit\Downloads\glew-2.1.0\lib\Release\Win32</AdditionalLibraryDirectories>
-      <AdditionalDependencies>kernel32.lib;user32.lib;gdi32.lib;winspool.lib;comdlg32.lib;advapi32.lib;shell32.lib;ole32.lib;oleaut32.lib;uuid.lib;odbc32.lib;odbccp32.lib;%(AdditionalDependencies);"C:\Users\Amit\Downloads\glfw-3.4.bin.WIN64\lib-vc2019\glfw3.lib";"C:\Program Files (x86)\Windows Kits\10\Lib\10.0.22621.0\um\x64\OpenGL32.Lib";"C:\Program Files (x86)\Windows Kits\10\Lib\10.0.22621.0\um\x64\Gdi32.Lib";"C:\Users\Amit\Downloads\glew-2.1.0\lib\Release\x64\glew32.lib";</AdditionalDependencies>
+      <AdditionalLibraryDirectories>.\external\glfw-3.4.bin.WIN64\lib-vc2019;.\external\OpenGl\OpenGL32.Lib;.\external\glew-2.1.0\lib\Release\x64;.\external\glew-2.1.0\lib\Release\Win32</AdditionalLibraryDirectories>
+      <AdditionalDependencies>kernel32.lib;user32.lib;gdi32.lib;winspool.lib;comdlg32.lib;advapi32.lib;shell32.lib;ole32.lib;oleaut32.lib;uuid.lib;odbc32.lib;odbccp32.lib;%(AdditionalDependencies);".\external\glfw-3.4.bin.WIN64\lib-vc2019\glfw3.lib";".\external\OpenGl\OpenGL32.Lib";".\external\OpenGl\Gdi32.Lib";".\external\glew-2.1.0\lib\Release\x64\glew32.lib"</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
@@ -105,15 +105,15 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>WIN32;NDEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>C:\Users\Amit\Downloads\imgui-1.91.2; C:\Users\Amit\Downloads\glfw-3.4.bin.WIN64\include;C:\Users\Amit\Downloads\imgui-1.91.2\backends;C:\Users\Amit\Downloads\glew-2.1.0\include;</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>.\external\imgui-1.91.2;.\external\glfw-3.4.bin.WIN64\include;.\external\imgui-1.91.2\backends;.\external\glew-2.1.0\include</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <OptimizeReferences>true</OptimizeReferences>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalLibraryDirectories>C:\Users\Amit\Downloads\glfw-3.4.bin.WIN64\lib-vc2019;"C:\Program Files (x86)\Windows Kits\10\Lib\10.0.22621.0\um\x64\OpenGL32.Lib";C:\Users\Amit\Downloads\glew-2.1.0\lib\Release\x64;C:\Users\Amit\Downloads\glew-2.1.0\lib\Release\Win32</AdditionalLibraryDirectories>
-      <AdditionalDependencies>kernel32.lib;user32.lib;gdi32.lib;winspool.lib;comdlg32.lib;advapi32.lib;shell32.lib;ole32.lib;oleaut32.lib;uuid.lib;odbc32.lib;odbccp32.lib;%(AdditionalDependencies);"C:\Users\Amit\Downloads\glfw-3.4.bin.WIN64\lib-vc2019\glfw3.lib";"C:\Program Files (x86)\Windows Kits\10\Lib\10.0.22621.0\um\x64\OpenGL32.Lib";"C:\Program Files (x86)\Windows Kits\10\Lib\10.0.22621.0\um\x64\Gdi32.Lib";"C:\Users\Amit\Downloads\glew-2.1.0\lib\Release\x64\glew32.lib";</AdditionalDependencies>
+      <AdditionalLibraryDirectories>.\external\glfw-3.4.bin.WIN64\lib-vc2019;.\external\OpenGl\OpenGL32.Lib;.\external\glew-2.1.0\lib\Release\x64;.\external\glew-2.1.0\lib\Release\Win32</AdditionalLibraryDirectories>
+      <AdditionalDependencies>kernel32.lib;user32.lib;gdi32.lib;winspool.lib;comdlg32.lib;advapi32.lib;shell32.lib;ole32.lib;oleaut32.lib;uuid.lib;odbc32.lib;odbccp32.lib;%(AdditionalDependencies);".\external\glfw-3.4.bin.WIN64\lib-vc2019\glfw3.lib";".\external\OpenGl\OpenGL32.Lib";".\external\OpenGl\Gdi32.Lib";".\external\glew-2.1.0\lib\Release\x64\glew32.lib"</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
@@ -122,13 +122,13 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>C:\Users\Amit\Downloads\imgui-1.91.2; C:\Users\Amit\Downloads\glfw-3.4.bin.WIN64\include;C:\Users\Amit\Downloads\imgui-1.91.2\backends;C:\Users\Amit\Downloads\glew-2.1.0\include;</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>.\external\imgui-1.91.2;.\external\glfw-3.4.bin.WIN64\include;.\external\imgui-1.91.2\backends;.\external\glew-2.1.0\include</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalLibraryDirectories>C:\Users\Amit\Downloads\glfw-3.4.bin.WIN64\lib-vc2019;"C:\Program Files (x86)\Windows Kits\10\Lib\10.0.22621.0\um\x64\OpenGL32.Lib";C:\Users\Amit\Downloads\glew-2.1.0\lib\Release\x64;C:\Users\Amit\Downloads\glew-2.1.0\lib\Release\Win32</AdditionalLibraryDirectories>
-      <AdditionalDependencies>kernel32.lib;user32.lib;gdi32.lib;winspool.lib;comdlg32.lib;advapi32.lib;shell32.lib;ole32.lib;oleaut32.lib;uuid.lib;odbc32.lib;odbccp32.lib;%(AdditionalDependencies);"C:\Users\Amit\Downloads\glfw-3.4.bin.WIN64\lib-vc2019\glfw3.lib";"C:\Program Files (x86)\Windows Kits\10\Lib\10.0.22621.0\um\x64\OpenGL32.Lib";"C:\Program Files (x86)\Windows Kits\10\Lib\10.0.22621.0\um\x64\Gdi32.Lib";"C:\Users\Amit\Downloads\glew-2.1.0\lib\Release\x64\glew32.lib";</AdditionalDependencies>
+      <AdditionalLibraryDirectories>.\external\glfw-3.4.bin.WIN64\lib-vc2019;.\external\OpenGl\OpenGL32.Lib;.\external\glew-2.1.0\lib\Release\x64;.\external\glew-2.1.0\lib\Release\Win32</AdditionalLibraryDirectories>
+      <AdditionalDependencies>kernel32.lib;user32.lib;gdi32.lib;winspool.lib;comdlg32.lib;advapi32.lib;shell32.lib;ole32.lib;oleaut32.lib;uuid.lib;odbc32.lib;odbccp32.lib;%(AdditionalDependencies);".\external\glfw-3.4.bin.WIN64\lib-vc2019\glfw3.lib";".\external\OpenGl\OpenGL32.Lib";".\external\OpenGl\Gdi32.Lib";".\external\glew-2.1.0\lib\Release\x64\glew32.lib"</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
@@ -139,32 +139,30 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>NDEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>C:\Users\Amit\Downloads\imgui-1.91.2; C:\Users\Amit\Downloads\glfw-3.4.bin.WIN64\include;C:\Users\Amit\Downloads\imgui-1.91.2\backends;C:\Users\Amit\Downloads\glew-2.1.0\include;</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>.\external\imgui-1.91.2;.\external\glfw-3.4.bin.WIN64\include;.\external\imgui-1.91.2\backends;.\external\glew-2.1.0\include</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <OptimizeReferences>true</OptimizeReferences>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalLibraryDirectories>C:\Users\Amit\Downloads\glfw-3.4.bin.WIN64\lib-vc2019;"C:\Program Files (x86)\Windows Kits\10\Lib\10.0.22621.0\um\x64\OpenGL32.Lib";C:\Users\Amit\Downloads\glew-2.1.0\lib\Release\x64;C:\Users\Amit\Downloads\glew-2.1.0\lib\Release\Win32</AdditionalLibraryDirectories>
-      <AdditionalDependencies>kernel32.lib;user32.lib;gdi32.lib;winspool.lib;comdlg32.lib;advapi32.lib;shell32.lib;ole32.lib;oleaut32.lib;uuid.lib;odbc32.lib;odbccp32.lib;%(AdditionalDependencies);"C:\Users\Amit\Downloads\glfw-3.4.bin.WIN64\lib-vc2019\glfw3.lib";"C:\Program Files (x86)\Windows Kits\10\Lib\10.0.22621.0\um\x64\OpenGL32.Lib";"C:\Program Files (x86)\Windows Kits\10\Lib\10.0.22621.0\um\x64\Gdi32.Lib";"C:\Users\Amit\Downloads\glew-2.1.0\lib\Release\x64\glew32.lib";</AdditionalDependencies>
+      <AdditionalLibraryDirectories>.\external\glfw-3.4.bin.WIN64\lib-vc2019;.\external\OpenGl\OpenGL32.Lib;.\external\glew-2.1.0\lib\Release\x64;.\external\glew-2.1.0\lib\Release\Win32</AdditionalLibraryDirectories>
+      <AdditionalDependencies>kernel32.lib;user32.lib;gdi32.lib;winspool.lib;comdlg32.lib;advapi32.lib;shell32.lib;ole32.lib;oleaut32.lib;uuid.lib;odbc32.lib;odbccp32.lib;%(AdditionalDependencies);".\external\glfw-3.4.bin.WIN64\lib-vc2019\glfw3.lib";".\external\OpenGl\OpenGL32.Lib";".\external\OpenGl\Gdi32.Lib";".\external\glew-2.1.0\lib\Release\x64\glew32.lib"</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="..\..\..\..\Downloads\imgui-1.91.2\backends\imgui_impl_glfw.cpp" />
-    <ClCompile Include="..\..\..\..\Downloads\imgui-1.91.2\backends\imgui_impl_opengl3.cpp" />
-    <ClCompile Include="..\..\..\..\Downloads\imgui-1.91.2\imgui.cpp" />
-    <ClCompile Include="..\..\..\..\Downloads\imgui-1.91.2\imgui_demo.cpp" />
-    <ClCompile Include="..\..\..\..\Downloads\imgui-1.91.2\imgui_draw.cpp" />
-    <ClCompile Include="..\..\..\..\Downloads\imgui-1.91.2\imgui_tables.cpp" />
-    <ClCompile Include="..\..\..\..\Downloads\imgui-1.91.2\imgui_widgets.cpp" />
+    <ClCompile Include="external\imgui-1.91.2\backends\imgui_impl_glfw.cpp" />
+    <ClCompile Include="external\imgui-1.91.2\backends\imgui_impl_opengl3.cpp" />
+    <ClCompile Include="external\imgui-1.91.2\imgui.cpp" />
+    <ClCompile Include="external\imgui-1.91.2\imgui_demo.cpp" />
+    <ClCompile Include="external\imgui-1.91.2\imgui_draw.cpp" />
+    <ClCompile Include="external\imgui-1.91.2\imgui_tables.cpp" />
+    <ClCompile Include="external\imgui-1.91.2\imgui_widgets.cpp" />
     <ClCompile Include="HelperFunctions.cpp" />
-    <ClCompile Include="ImGuiService.cpp" />
     <ClCompile Include="main.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="HelperFunctions.h" />
-    <ClInclude Include="ImGuiService.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

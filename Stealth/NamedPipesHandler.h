@@ -3,7 +3,7 @@
 
 #include <Windows.h>
 #include <string>
-#include "NamedPipesException.h"
+#include "Exceptions.h"
 
 #pragma once
 class NamedPipesHandler

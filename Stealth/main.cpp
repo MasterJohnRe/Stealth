@@ -93,6 +93,7 @@ void RenderAccessWindow(const std::vector<AccessEntry>& accessEntries, bool& sho
     // Close button at the bottom
     if (ImGui::Button("Close")) {
         showAccessWindow = false;  // Close the window
+        namedPipesHandler.closePipe();
     }
 
     ImGui::End();
@@ -209,14 +210,16 @@ void RenderAddressWindow(std::vector<AddressEntry>& addresses) {
     }
 
     ImGui::End();
-    // Render the Access Window if needed
+
+    // Render the Access Window after creating or updating it
+    RenderAccessWindow(accessEntries, showAccessWindow);
+
     if (showAccessWindow) {
         try{
         std::string data;
         namedPipesHandler.readData(data);  // Read from the named pipe
         // Parse the data into accessEntries
         //accessEntries = helperFunctionsService.ParseAccessEntries(data);  // Custom parsing function
-        //RenderAccessWindow(accessEntries, showAccessWindow);
         }
         catch (PipeNotOpenException ex) {
             logger->error("Failed reading data from FindWhatAccessThisAddress Pipeline", ex.what());

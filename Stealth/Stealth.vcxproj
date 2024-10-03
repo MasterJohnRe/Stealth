@@ -151,6 +151,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="Consts.cpp" />
     <ClCompile Include="external\imgui-1.91.2\backends\imgui_impl_glfw.cpp" />
     <ClCompile Include="external\imgui-1.91.2\backends\imgui_impl_opengl3.cpp" />
     <ClCompile Include="external\imgui-1.91.2\imgui.cpp" />

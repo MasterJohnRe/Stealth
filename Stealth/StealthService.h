@@ -1,4 +1,7 @@
 #pragma once
+#ifndef STEALTHSERVICE_H
+#define STEALTHSERVICE_H
+
 #include <iostream>
 #include "MemoryAccess.h"
 #include "OsHandler.h"
@@ -18,3 +21,4 @@ public:
 	void stopFindWhatAccessThisAddress();
 };
 
+#endif

@@ -1,4 +1,7 @@
 #pragma once
+#ifndef HELPERFUNCTIONS_H
+#define HELPERFUNCTIONS_H
+
 #include "windows.h"
 #include <string>
 #include <sstream>    // For std::stringstream
@@ -11,3 +14,4 @@ public:
 	DWORD ConvertStringToAddress(const std::string& addressStr);
 };
 
+#endif

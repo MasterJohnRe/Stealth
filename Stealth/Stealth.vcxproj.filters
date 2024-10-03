@@ -69,6 +69,9 @@
     <ClCompile Include="OsHandler.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="Consts.cpp">
+      <Filter>Header Files\Consts</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="HelperFunctions.h">

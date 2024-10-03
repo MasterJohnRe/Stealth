@@ -4,11 +4,13 @@
 #include <string>
 #include <GL/glew.h>
 #include <GLFW/glfw3.h>
-#include "windows.h"
 #include "imgui.h"
 #include "imgui_impl_glfw.h"
 #include "imgui_impl_opengl3.h"
 #include "HelperFunctions.h"
+#include "StealthService.h"
+
+StealthService stealthService = StealthService();
 
 struct AddressEntry {
     std::string description;
@@ -50,11 +52,6 @@ void AddAddressEntry(std::vector<AddressEntry>& addresses) {
     new_entry.type = "int";
     new_entry.value = "0";
     addresses.push_back(new_entry);
-}
-
-void findWhatAccessThisAddress(DWORD address) {
-    //inject dll using the address here.
-    std::cout << "Find what accesses address: " << address << std::endl;
 }
 
 void RenderAddressWindow(std::vector<AddressEntry>& addresses) {
@@ -155,7 +152,7 @@ void RenderAddressWindow(std::vector<AddressEntry>& addresses) {
 
         // Handle the "Find what access this address" operation
         if (rowToFind != -1) {
-            findWhatAccessThisAddress(addresses[rowToFind].address);
+            //stealthService.findWhatAccessThisAddress(addresses[rowToFind].address);
         }
 
         ImGui::EndTable();
@@ -244,7 +241,6 @@ int createOpenGLWindow() {
 int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine, int nCmdShow)
 {
     // Your application code here
-    
     createOpenGLWindow();
     return 0;
 }

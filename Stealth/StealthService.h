@@ -5,7 +5,6 @@
 #include <iostream>
 #include "MemoryAccess.h"
 #include "OsHandler.h"
-#include "NamedPipesHandler.h"
 #include "Consts.h"
 #include "Exceptions.h"
 

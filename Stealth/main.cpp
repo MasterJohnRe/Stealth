@@ -9,14 +9,25 @@
 #include "imgui_impl_opengl3.h"
 #include "HelperFunctions.h"
 #include "StealthService.h"
+#include "NamedPipesHandler.h"
+#include <spdlog/spdlog.h>
+#include <spdlog/sinks/basic_file_sink.h>
 
 StealthService stealthService = StealthService();
+NamedPipesHandler namedPipesHandler = NamedPipesHandler();
+static auto logger = spdlog::basic_logger_mt("file_logger", "logfile.txt");
 
 struct AddressEntry {
     std::string description;
     DWORD address;
     std::string type;
     std::string value;
+};
+
+struct AccessEntry {
+    std::string address;
+    std::string value;
+    int count;
 };
 
 void setupWindow(GLFWwindow*& window) {
@@ -54,8 +65,45 @@ void AddAddressEntry(std::vector<AddressEntry>& addresses) {
     addresses.push_back(new_entry);
 }
 
+// Function to display the new access window
+void RenderAccessWindow(const std::vector<AccessEntry>& accessEntries, bool& showAccessWindow) {
+    if (!showAccessWindow) return;
+
+    // Create a new ImGui window to display access data
+    ImGui::Begin("Memory Access Viewer", &showAccessWindow);  // Window title is "Memory Access Viewer"
+
+    // Create a table to show the address, value, and count
+    if (ImGui::BeginTable("AccessTable", 3, ImGuiTableFlags_Borders | ImGuiTableFlags_RowBg | ImGuiTableFlags_Resizable)) {
+        ImGui::TableSetupColumn("Address");
+        ImGui::TableSetupColumn("Value");
+        ImGui::TableSetupColumn("Count");
+        ImGui::TableHeadersRow();
+
+        // Display each entry in the table
+        for (const auto& entry : accessEntries) {
+            ImGui::TableNextRow();
+            ImGui::TableSetColumnIndex(0); ImGui::Text("%s", entry.address.c_str());
+            ImGui::TableSetColumnIndex(1); ImGui::Text("%s", entry.value.c_str());
+            ImGui::TableSetColumnIndex(2); ImGui::Text("%d", entry.count);
+        }
+
+        ImGui::EndTable();
+    }
+
+    // Close button at the bottom
+    if (ImGui::Button("Close")) {
+        showAccessWindow = false;  // Close the window
+    }
+
+    ImGui::End();
+}
+
+
 void RenderAddressWindow(std::vector<AddressEntry>& addresses) {
     HelperFunctions helperFunctionsService = HelperFunctions();
+    static bool showAccessWindow = false;  // Track whether to show the access window
+    static std::vector<AccessEntry> accessEntries;  // Stores the entries read from the named pipe
+
     // Create the main window
     ImGui::Begin("Address Viewer");
 
@@ -152,6 +200,8 @@ void RenderAddressWindow(std::vector<AddressEntry>& addresses) {
 
         // Handle the "Find what access this address" operation
         if (rowToFind != -1) {
+            showAccessWindow = true;
+            namedPipesHandler.createPipe("FindWhatAccessThisAddressNamedPipe");
             //stealthService.findWhatAccessThisAddress(addresses[rowToFind].address);
         }
 
@@ -159,6 +209,22 @@ void RenderAddressWindow(std::vector<AddressEntry>& addresses) {
     }
 
     ImGui::End();
+    // Render the Access Window if needed
+    if (showAccessWindow) {
+        try{
+        std::string data;
+        namedPipesHandler.readData(data);  // Read from the named pipe
+        // Parse the data into accessEntries
+        //accessEntries = helperFunctionsService.ParseAccessEntries(data);  // Custom parsing function
+        //RenderAccessWindow(accessEntries, showAccessWindow);
+        }
+        catch (PipeNotOpenException ex) {
+            logger->error("Failed reading data from FindWhatAccessThisAddress Pipeline", ex.what());
+        }
+        catch (PipeReadException ex) {
+            logger->error("Failed reading data from FindWhatAccessThisAddress Pipeline", ex.what());
+        }
+    }
 }
 
 int createOpenGLWindow() {
@@ -240,6 +306,8 @@ int createOpenGLWindow() {
 
 int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine, int nCmdShow)
 {
+    spdlog::set_default_logger(logger);
+    spdlog::set_pattern("[%Y-%m-%d %H:%M:%S] [%l] %v");
     // Your application code here
     createOpenGLWindow();
     return 0;

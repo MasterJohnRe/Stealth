@@ -2,13 +2,10 @@
 #include <spdlog/spdlog.h>
 #include <spdlog/sinks/basic_file_sink.h>
 
-auto logger = spdlog::basic_logger_mt("file_logger", "logfile.txt");
-//spdlog::set_pattern("[%Y-%m-%d%H:%M:%S] [%l] %v");
+static auto logger = spdlog::get("file_logger");  // Static logger reference for the file
 
 void StealthService::findWhatAccessThisAddress(DWORD processName) {
 	try {
-		NamedPipesHandler namedPipesHandler = NamedPipesHandler();
-		namedPipesHandler.createPipe("FindWhatAccessThisAddressNamedPipe");
 		std::string command = Consts::INJECTOR_64_EXE_FILE_PATH + "/dll" + Consts::FIND_WHAT_ACCESS_THIS_ADDRESS_DLL_FILE_PATH + "/target" + std::to_string(this->attachedProcessPid) + "/action 1";
 		this->osHandler.runCommand(command);
 	}

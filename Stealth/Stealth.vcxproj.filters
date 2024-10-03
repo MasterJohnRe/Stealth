@@ -22,6 +22,12 @@
       <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
       <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
     </Filter>
+    <Filter Include="Header Files\Exceptions">
+      <UniqueIdentifier>{3c7ab633-7c8e-4af5-87e6-575ef4a22d31}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Consts">
+      <UniqueIdentifier>{084b8d80-8b42-43b7-9d71-8f249023b5f9}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="HelperFunctions.cpp">
@@ -51,10 +57,40 @@
     <ClCompile Include="external\imgui-1.91.2\imgui_widgets.cpp">
       <Filter>external\imgui</Filter>
     </ClCompile>
+    <ClCompile Include="NamedPipesHandler.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="StealthService.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="MemoryAccess.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="OsHandler.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="HelperFunctions.h">
       <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="NamedPipesHandler.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="StealthService.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="MemoryAccess.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="OsHandler.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Exceptions.h">
+      <Filter>Header Files\Exceptions</Filter>
+    </ClInclude>
+    <ClInclude Include="Consts.h">
+      <Filter>Header Files\Consts</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

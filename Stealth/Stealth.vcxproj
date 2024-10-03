@@ -88,7 +88,7 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>WIN32;_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>.\external\imgui-1.91.2;.\external\glfw-3.4.bin.WIN64\include;.\external\imgui-1.91.2\backends;.\external\glew-2.1.0\include</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>.\external\imgui-1.91.2;.\external\glfw-3.4.bin.WIN64\include;.\external\imgui-1.91.2\backends;.\external\glew-2.1.0\include;.\external\spdlog\include</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
@@ -105,7 +105,7 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>WIN32;NDEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>.\external\imgui-1.91.2;.\external\glfw-3.4.bin.WIN64\include;.\external\imgui-1.91.2\backends;.\external\glew-2.1.0\include</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>.\external\imgui-1.91.2;.\external\glfw-3.4.bin.WIN64\include;.\external\imgui-1.91.2\backends;.\external\glew-2.1.0\include;.\external\spdlog\include</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
@@ -122,7 +122,7 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>.\external\imgui-1.91.2;.\external\glfw-3.4.bin.WIN64\include;.\external\imgui-1.91.2\backends;.\external\glew-2.1.0\include</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>.\external\imgui-1.91.2;.\external\glfw-3.4.bin.WIN64\include;.\external\imgui-1.91.2\backends;.\external\glew-2.1.0\include;.\external\spdlog\include</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
@@ -139,7 +139,7 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>NDEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>.\external\imgui-1.91.2;.\external\glfw-3.4.bin.WIN64\include;.\external\imgui-1.91.2\backends;.\external\glew-2.1.0\include</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>.\external\imgui-1.91.2;.\external\glfw-3.4.bin.WIN64\include;.\external\imgui-1.91.2\backends;.\external\glew-2.1.0\include;.\external\spdlog\include</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
@@ -160,9 +160,19 @@
     <ClCompile Include="external\imgui-1.91.2\imgui_widgets.cpp" />
     <ClCompile Include="HelperFunctions.cpp" />
     <ClCompile Include="main.cpp" />
+    <ClCompile Include="MemoryAccess.cpp" />
+    <ClCompile Include="NamedPipesHandler.cpp" />
+    <ClCompile Include="OsHandler.cpp" />
+    <ClCompile Include="StealthService.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Consts.h" />
     <ClInclude Include="HelperFunctions.h" />
+    <ClInclude Include="MemoryAccess.h" />
+    <ClInclude Include="Exceptions.h" />
+    <ClInclude Include="NamedPipesHandler.h" />
+    <ClInclude Include="OsHandler.h" />
+    <ClInclude Include="StealthService.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

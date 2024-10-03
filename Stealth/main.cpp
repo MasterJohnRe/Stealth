@@ -9,6 +9,7 @@
 #include "imgui_impl_glfw.h"
 #include "imgui_impl_opengl3.h"
 #include "HelperFunctions.h"
+#include "NamedPipesHandler.h"
 
 struct AddressEntry {
     std::string description;
@@ -244,6 +245,8 @@ int createOpenGLWindow() {
 int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine, int nCmdShow)
 {
     // Your application code here
+    NamedPipesHandler namedPipesHandler = NamedPipesHandler();
+    namedPipesHandler.createPipe("FindWhatAccessThisAddressNamedPipe");
     createOpenGLWindow();
     return 0;
 }

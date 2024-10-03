@@ -4,6 +4,6 @@
 class OsHandler
 {
 public:
-	int runCommand(const char* command);
+	int runCommand(std::string command);
 };
 

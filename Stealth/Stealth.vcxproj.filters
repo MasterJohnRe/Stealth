@@ -57,9 +57,6 @@
     <ClCompile Include="external\imgui-1.91.2\imgui_widgets.cpp">
       <Filter>external\imgui</Filter>
     </ClCompile>
-    <ClCompile Include="NamedPipesHandler.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="StealthService.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
@@ -71,6 +68,9 @@
     </ClCompile>
     <ClCompile Include="Consts.cpp">
       <Filter>Header Files\Consts</Filter>
+    </ClCompile>
+    <ClCompile Include="NamedPipesHandler.cpp">
+      <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

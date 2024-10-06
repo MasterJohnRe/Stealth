@@ -65,29 +65,35 @@ void AddAddressEntry(std::vector<AddressEntry>& addresses) {
 // Function to display the new access window
 void RenderAccessWindow(const std::vector<AccessEntry>& accessEntries, bool& showAccessWindow) {
     if (!showAccessWindow) return;
-
+    HelperFunctions helperFunctionsService = HelperFunctions();
     // Create a new ImGui window to display access data
+     // Set the initial size of the window to be larger
+    ImGui::SetNextWindowSize(ImVec2(650, 800), ImGuiCond_Always);      // Set width to 1000 and height to 800
+    ImGui::SetNextWindowPos(ImVec2(100, 50), ImGuiCond_Always);         // Optional: Set position to be closer to top left
     ImGui::Begin("Memory Access Viewer", &showAccessWindow);  // Window title is "Memory Access Viewer"
 
-    // Create a table to show the address, value, and count
+   // Create a child window to control the size of the table inside
+    ImGui::BeginChild("TableRegion", ImVec2(950, 400), true, ImGuiWindowFlags_AlwaysUseWindowPadding);  // Adjust size here
+
+    // Create a table to show the address, value, and count with specific size
     if (ImGui::BeginTable("AccessTable", 2, ImGuiTableFlags_Borders | ImGuiTableFlags_RowBg | ImGuiTableFlags_Resizable)) {
-        ImGui::TableSetupColumn("Address");
-        ImGui::TableSetupColumn("Count");
+        ImGui::TableSetupColumn("Address", ImGuiTableColumnFlags_WidthFixed, 450.0f);  // Set column width
+        ImGui::TableSetupColumn("Count", ImGuiTableColumnFlags_WidthFixed, 150.0f);  // Set column width
         ImGui::TableHeadersRow();
 
         // Display each entry in the table
         for (const auto& entry : accessEntries) {
             ImGui::TableNextRow();
-            ImGui::TableSetColumnIndex(0); ImGui::Text("%s", std::to_string(entry.RIP).c_str());
-            ImGui::TableSetColumnIndex(1); ImGui::Text("%d", std::to_string(entry.count).c_str());
+            ImGui::TableSetColumnIndex(0); ImGui::Text("%s", helperFunctionsService.ConvertAddressToString(entry.RIP).c_str());
+            ImGui::TableSetColumnIndex(1); ImGui::Text("%d", entry.count);
         }
 
         ImGui::EndTable();
     }
+    ImGui::EndChild();  // End the child region
 
     // Close button at the bottom
     if (ImGui::Button("Close")) {
-        showAccessWindow = false;  // Close the window
         namedPipesHandler.closePipe();
     }
 
@@ -228,21 +234,21 @@ void RenderAddressWindow(std::vector<AddressEntry>& addresses) {
     if (showAccessWindow) {
         try{
             std::string data;
-            std::future<std::string> dataFuture = namedPipesHandler.readDataAsync();  // Read from the named pipe
-            if (dataFuture.wait_for(std::chrono::milliseconds(5000)) == std::future_status::ready) {
-                std::string data = dataFuture.get();  // Retrieve the data when ready
+            namedPipesHandler.readDataAsync();  // Start async read operation  // Read from the named pipe
+            if (namedPipesHandler.dataFuture.wait_for(std::chrono::milliseconds(300)) == std::future_status::ready) {
+                std::string data = namedPipesHandler.dataFuture.get();  // Retrieve the data when ready
                 logger->info("Data received in GUI: ", data);
-            }
-            AccessEntry currentAccessEntry = helperFunctionsService.parseAccessEntry(data);
-            // Parse the data into accessEntries
-            auto it = findAccessEntry(currentAccessEntry, accessEntries);
-            if (it != accessEntries.end()) {
-                currentAccessEntry.count = currentAccessEntry.count + it->count;
-                accessEntries.erase(it);
-                accessEntries.push_back(currentAccessEntry);  // Custom parsing function
-            }
-            else {
-                accessEntries.push_back(currentAccessEntry);  // Custom parsing function
+                AccessEntry currentAccessEntry = helperFunctionsService.parseAccessEntry(data);
+                // Parse the data into accessEntries
+                auto it = findAccessEntry(currentAccessEntry, accessEntries);
+                if (it != accessEntries.end()) {
+                    currentAccessEntry.count = currentAccessEntry.count + it->count;
+                    accessEntries.erase(it);
+                    accessEntries.push_back(currentAccessEntry);  // Custom parsing function
+                }
+                else {
+                    accessEntries.push_back(currentAccessEntry);  // Custom parsing function
+                }
             }
         }
         catch (PipeNotOpenException ex) {

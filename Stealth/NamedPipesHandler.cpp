@@ -35,6 +35,7 @@ void NamedPipesHandler::createPipe(const std::string& pipeName) {
 
 // Connect to the named pipe
 void NamedPipesHandler::connectToPipe() {
+	std::lock_guard<std::mutex> lock(pipeMutex);  // Protect access to pipe connection
     hPipe = CreateFileA(
         pipeName.c_str(),           // Pipe name
         GENERIC_READ | GENERIC_WRITE, // Read and write access
@@ -123,7 +124,8 @@ void NamedPipesHandler::readData(std::promise<std::string>&& dataPromise, DWORD 
         // Calculate elapsed time
         DWORD elapsed = GetTickCount() - startTime;
         if (elapsed >= timeoutMs) {
-            throw PipeReadException("Error: Could not read from the pipe within the timeout period. Error code: " + std::to_string(GetLastError()));
+            dataPromise.set_exception(std::make_exception_ptr(PipeReadException("Error: Could not read from the pipe within the timeout period. Error code: " + std::to_string(GetLastError()))));
+            return;
         }
 
         // Wait a short time before retrying (to avoid busy looping)
@@ -132,9 +134,15 @@ void NamedPipesHandler::readData(std::promise<std::string>&& dataPromise, DWORD 
 }
 
 // Reads data from the named pipe with timeout and retry mechanism, using custom exceptions
-std::future<std::string> NamedPipesHandler::readDataAsync(DWORD timeoutMs) {
+
+std::shared_future<std::string> NamedPipesHandler::readDataAsync(DWORD timeoutMs) {
     std::promise<std::string> dataPromise;
-    std::future<std::string> dataFuture = dataPromise.get_future();
-    readThread = std::thread(&NamedPipesHandler::readData, this, std::move(dataPromise), timeoutMs);  // Launch the readData function in a new thread
-    return dataFuture;
+    std::shared_future<std::string> localFuture = dataPromise.get_future().share();  // Create a shared future
+    dataFuture = localFuture;  // Assign to the member variable
+    if (readThread.joinable()) {
+        readThread.join();  // Join the previous thread to avoid conflicts
+    }
+    readThread = std::thread(&NamedPipesHandler::readData, this, std::move(dataPromise), timeoutMs);  // Use member thread
+    return localFuture;  // Return the shared future
 }
+

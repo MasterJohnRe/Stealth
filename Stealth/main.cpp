@@ -13,21 +13,18 @@
 #include <spdlog/spdlog.h>
 #include <spdlog/sinks/basic_file_sink.h>
 
+LPCSTR PROCESS_NAME = "The Witcher 3";
+
 StealthService stealthService = StealthService();
-NamedPipesHandler namedPipesHandler = NamedPipesHandler();
+NamedPipesHandler namedPipesHandler;
+MemoryAccess memoryHandler;
 static auto logger = spdlog::basic_logger_mt("file_logger", "logfile.txt");
 
 struct AddressEntry {
     std::string description;
-    DWORD address;
+    DWORD64 address;
     std::string type;
     std::string value;
-};
-
-struct AccessEntry {
-    std::string address;
-    std::string value;
-    int count;
 };
 
 void setupWindow(GLFWwindow*& window) {
@@ -73,18 +70,16 @@ void RenderAccessWindow(const std::vector<AccessEntry>& accessEntries, bool& sho
     ImGui::Begin("Memory Access Viewer", &showAccessWindow);  // Window title is "Memory Access Viewer"
 
     // Create a table to show the address, value, and count
-    if (ImGui::BeginTable("AccessTable", 3, ImGuiTableFlags_Borders | ImGuiTableFlags_RowBg | ImGuiTableFlags_Resizable)) {
+    if (ImGui::BeginTable("AccessTable", 2, ImGuiTableFlags_Borders | ImGuiTableFlags_RowBg | ImGuiTableFlags_Resizable)) {
         ImGui::TableSetupColumn("Address");
-        ImGui::TableSetupColumn("Value");
         ImGui::TableSetupColumn("Count");
         ImGui::TableHeadersRow();
 
         // Display each entry in the table
         for (const auto& entry : accessEntries) {
             ImGui::TableNextRow();
-            ImGui::TableSetColumnIndex(0); ImGui::Text("%s", entry.address.c_str());
-            ImGui::TableSetColumnIndex(1); ImGui::Text("%s", entry.value.c_str());
-            ImGui::TableSetColumnIndex(2); ImGui::Text("%d", entry.count);
+            ImGui::TableSetColumnIndex(0); ImGui::Text("%s", std::to_string(entry.RIP).c_str());
+            ImGui::TableSetColumnIndex(1); ImGui::Text("%d", std::to_string(entry.count).c_str());
         }
 
         ImGui::EndTable();
@@ -99,6 +94,15 @@ void RenderAccessWindow(const std::vector<AccessEntry>& accessEntries, bool& sho
     ImGui::End();
 }
 
+// Function to find the matching entry using simple iteration
+std::vector<AccessEntry>::iterator findAccessEntry(const AccessEntry& accessEntry, std::vector<AccessEntry>& accessEntries) {
+    for (auto it = accessEntries.begin(); it != accessEntries.end(); ++it) {
+        if (it->RIP == accessEntry.RIP) {
+            return it;  // Return the iterator if RIP matches
+        }
+    }
+    return accessEntries.end();  // Return end() if no match is found
+}
 
 void RenderAddressWindow(std::vector<AddressEntry>& addresses) {
     HelperFunctions helperFunctionsService = HelperFunctions();
@@ -154,7 +158,7 @@ void RenderAddressWindow(std::vector<AddressEntry>& addresses) {
                     addresses[row].description = buffer;
                 }
 
-                // Edit Address as a string and convert it to DWORD
+                // Edit Address as a string and convert it to DWORD64
                 strcpy_s(buffer, helperFunctionsService.ConvertAddressToString(addresses[row].address).c_str());
                 if (ImGui::InputText("Edit Address", buffer, IM_ARRAYSIZE(buffer), ImGuiInputTextFlags_EnterReturnsTrue)) {
                     addresses[row].address = helperFunctionsService.ConvertStringToAddress(buffer);
@@ -201,9 +205,16 @@ void RenderAddressWindow(std::vector<AddressEntry>& addresses) {
 
         // Handle the "Find what access this address" operation
         if (rowToFind != -1) {
-            showAccessWindow = true;
-            namedPipesHandler.createPipe("FindWhatAccessThisAddressNamedPipe");
-            //stealthService.findWhatAccessThisAddress(addresses[rowToFind].address);
+            try {
+                showAccessWindow = true;
+                stealthService.attachToProcess(PROCESS_NAME);
+                namedPipesHandler.createPipe("FindWhatAccessThisAddressNamedPipe");
+                stealthService.findWhatAccessThisAddress();
+                namedPipesHandler.writeData(helperFunctionsService.ConvertAddressToString(addresses[rowToFind].address), 15000);
+            }
+            catch (PipeWriteException ex) {
+                logger->error("Error: can't write address to pipeline: ", ex.what());
+            }
         }
 
         ImGui::EndTable();
@@ -216,16 +227,32 @@ void RenderAddressWindow(std::vector<AddressEntry>& addresses) {
 
     if (showAccessWindow) {
         try{
-        std::string data;
-        namedPipesHandler.readData(data);  // Read from the named pipe
-        // Parse the data into accessEntries
-        //accessEntries = helperFunctionsService.ParseAccessEntries(data);  // Custom parsing function
+            std::string data;
+            std::future<std::string> dataFuture = namedPipesHandler.readDataAsync();  // Read from the named pipe
+            if (dataFuture.wait_for(std::chrono::milliseconds(5000)) == std::future_status::ready) {
+                std::string data = dataFuture.get();  // Retrieve the data when ready
+                logger->info("Data received in GUI: ", data);
+            }
+            AccessEntry currentAccessEntry = helperFunctionsService.parseAccessEntry(data);
+            // Parse the data into accessEntries
+            auto it = findAccessEntry(currentAccessEntry, accessEntries);
+            if (it != accessEntries.end()) {
+                currentAccessEntry.count = currentAccessEntry.count + it->count;
+                accessEntries.erase(it);
+                accessEntries.push_back(currentAccessEntry);  // Custom parsing function
+            }
+            else {
+                accessEntries.push_back(currentAccessEntry);  // Custom parsing function
+            }
         }
         catch (PipeNotOpenException ex) {
             logger->error("Failed reading data from FindWhatAccessThisAddress Pipeline", ex.what());
         }
         catch (PipeReadException ex) {
             logger->error("Failed reading data from FindWhatAccessThisAddress Pipeline", ex.what());
+        }
+        catch (const std::exception& ex) {
+            logger->error("Exception caught: " ,ex.what());
         }
     }
 }

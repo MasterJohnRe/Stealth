@@ -41,6 +41,12 @@ public:
     explicit PipeNotOpenException(const std::string& message) : NamedPipeException(message) {}
 };
 
+// Exception for operations when pipe is not open
+class PipeNotConnectedException : public NamedPipeException {
+public:
+    explicit PipeNotConnectedException(const std::string& message) : NamedPipeException(message) {}
+};
+
 
 // Base class for Named Pipe exceptions
 class OsHandlerException : public std::exception {

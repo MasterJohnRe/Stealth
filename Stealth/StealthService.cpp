@@ -4,9 +4,9 @@
 
 static auto logger = spdlog::get("file_logger");  // Static logger reference for the file
 
-void StealthService::findWhatAccessThisAddress(DWORD processName) {
+void StealthService::findWhatAccessThisAddress() {
 	try {
-		std::string command = Consts::INJECTOR_64_EXE_FILE_PATH + "/dll" + Consts::FIND_WHAT_ACCESS_THIS_ADDRESS_DLL_FILE_PATH + "/target" + std::to_string(this->attachedProcessPid) + "/action 1";
+		std::string command = Consts::INJECTOR_64_EXE_FILE_PATH + " " +  "/dll" + " " + Consts::FIND_WHAT_ACCESS_THIS_ADDRESS_DLL_FILE_PATH + " " + "/target" + " " + std::to_string(this->attachedProcessPid) + " " + "/action 1";
 		this->osHandler.runCommand(command);
 	}
 	catch (const OsHandlerRunCommandException& ex) {

@@ -16,7 +16,7 @@ private:
 	OsHandler osHandler = OsHandler();
 public:
 	void attachToProcess(std::string processName);
-	void findWhatAccessThisAddress(DWORD address);
+	void findWhatAccessThisAddress();
 	void stopFindWhatAccessThisAddress();
 };
 
